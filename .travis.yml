@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - "0.10"
+  - "0.11"
+
+script: npm run-script test-lcov
+
+after_script:
+  - npm install coveralls
+  - cat ./coverage/lcov.info | coveralls
+
+notifications:
+  email: false
