@@ -2,33 +2,71 @@
  * GB2260 parser
  */
 
-var data = require('./GB2260');
+var CURRENT = 2013;
 
-exports.data = data;
+var data = {};
+// Use your own data
+if (process.env.GB2260_DATA) {
+  data = require(process.env.GB2260_DATA);
+} else {
+  data = require('./GB2260');
+}
 
-exports.parse = function(code) {
-  code = code.toString();
-  code = code.replace(/0+$/, '');
-  if (code.length < 2 || code.length > 6 || code.length % 2 !== 0) {
-    throw new Error('Invalid Code');
-  }
-
-  var province = data[code.slice(0, 2) + '0000'];
-  if (!province) return null;
-
-  if (code.length === 2) {
-    return province;
-  }
-
-  var area = data[code.slice(0, 4) + '00'];
-  if (!area) return null;
-
-  if (code.length === 4) {
-    return province + ' ' + area;
-  }
-
-  var name = data[code];
-  if (!name) return null;
-
-  return province + ' ' + area + ' ' + name;
+exports = module.exports = {
+  get data() {
+    return data;
+  },
 };
+
+var YEARS = Object.keys(data);
+
+function Division(code, year) {
+  this.code = code.toString();
+  if (year && YEARS.indexOf(year.toString()) === -1) {
+    throw new Error('year must be in ' + YEARS.toString());
+  }
+  this.year = year;
+}
+
+Division.prototype = {
+  get data() {
+    if (this.year) {
+      return data[this.year.toString()];
+    }
+    return data[CURRENT.toString()];
+  },
+  get province() {
+    return this.data[this.code.slice(0, 2) + '0000'];
+  },
+  get prefecture() {
+    if (/0000$/.test(this.code)) return null;
+    return this.data[this.code.slice(0, 4) + '00'];
+  },
+  get county() {
+    if (/00$/.test(this.code)) return null;
+    return this.data[this.code];
+  },
+  toString: function() {
+    return [this.province, this.prefecture, this.county].join(' ').trim();
+  },
+  valueOf: function() {
+    return this.toString();
+  },
+  inspect: function() {
+    // inspect is designed for console.log
+    var prefix = 'GB/T 2260';
+    if (this.year) {
+      prefix += '-' + this.year;
+    }
+    return prefix + this.toString();
+  },
+  toJSON: function() {
+    return {
+      province: this.province,
+      prefecture: this.prefecture,
+      county: this.county
+    };
+  },
+};
+
+exports.Division = Division;
