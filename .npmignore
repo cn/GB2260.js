@@ -1,1 +1,7 @@
 generate.js
+node_modules/
+coverage/
+data/
+.gitmodules
+.travis.yml
+.npmignore
