@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/cn/GB2260/issues"
   },
-  "homepage": "https://github.com/cn/GB2260"
+  "homepage": "https://github.com/cn/GB2260",
+  "devDependencies": {
+    "mocha": "^2.0.1"
+  },
+  "scripts": {
+    "test": "node_modules/.bin/mocha"
+  }
 }
