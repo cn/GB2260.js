@@ -46,6 +46,18 @@ Division.prototype = {
     if (/00$/.test(this.code)) return null;
     return this.data[this.code];
   },
+  valid: function() {
+    if (!/0000$/.test(this.code) && !this.prefecture) {
+      return false;
+    }
+    if (!/00$/.test(this.code) && !this.county) {
+      return false;
+    }
+    if (!this.province) {
+      return false;
+    }
+    return true;
+  },
   toString: function() {
     return [this.province, this.prefecture, this.county].join(' ').trim();
   },
@@ -58,7 +70,7 @@ Division.prototype = {
     if (this.year) {
       prefix += '-' + this.year;
     }
-    return prefix + this.toString();
+    return '<' + prefix + '> ' + this.toString();
   },
   toJSON: function() {
     return {
