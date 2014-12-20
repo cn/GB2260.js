@@ -5,7 +5,7 @@
 var CURRENT = 2013;
 
 var data = {};
-// Use your own data
+/* istanbul ignore if  */
 if (process.env.GB2260_DATA) {
   data = require(process.env.GB2260_DATA);
 } else {
