@@ -6,3 +6,4 @@ data/
 .gitmodules
 .travis.yml
 .npmignore
+*.log
