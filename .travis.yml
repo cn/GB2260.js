@@ -2,7 +2,9 @@ language: node_js
 node_js:
   - "0.12"
 
-before_script: npm run data
+before_script:
+  - mkdir -p lib
+  - npm run data
 
 script: npm run test-lcov
 
