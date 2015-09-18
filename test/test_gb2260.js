@@ -115,3 +115,15 @@ describe('GB2260.provinces', function() {
     assertError(gb2260.counties.bind(gb2260), 9);
   });
 });
+
+describe('for coverage', function() {
+  it('can accept data', function() {
+    var data = require('../lib/2014');
+    new gb.GB2260(2014, data);
+  });
+
+  it('can has no year', function() {
+    var div = new gb.Division(12, 'GB');
+    assert(div.inspect(), '<GB/T 2260> 12 GB');
+  });
+});
