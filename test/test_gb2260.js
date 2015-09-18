@@ -7,92 +7,111 @@ function assert(a, b) {
   }
 }
 
-function suite(year) {
-  describe(year, function() {
-
-    it('is a province', function() {
-      var data = new gb.Division(110000, year);
-      assert(data.province, '北京市');
-      assert(data.toString(), '北京市');
-      assert(data.valueOf(), data.toString());
-
-      var rv = data.toJSON();
-      assert(rv.province, data.province);
-      assert(rv.prefecture, data.prefecture);
-      assert(rv.county, data.county);
-    });
-
-    it('is a prefecture', function() {
-      var data = new gb.Division(110100, year);
-      assert(data.province, '北京市');
-      assert(data.prefecture, '市辖区');
-      assert(data.toString(), '北京市 市辖区');
-      assert(data.valueOf(), data.toString());
-
-      var rv = data.toJSON();
-      assert(rv.province, data.province);
-      assert(rv.prefecture, data.prefecture);
-      assert(rv.county, data.county);
-    });
-
-    it('is a county', function() {
-      var data = new gb.Division(110101, year);
-      assert(data.province, '北京市');
-      assert(data.prefecture, '市辖区');
-      assert(data.county, '东城区');
-      assert(data.toString(), '北京市 市辖区 东城区');
-      assert(data.valueOf(), data.toString());
-
-      var rv = data.toJSON();
-      assert(rv.province, data.province);
-      assert(rv.prefecture, data.prefecture);
-      assert(rv.county, data.county);
-    });
-  });
+function assertError(func, code) {
+  var rv;
+  try {
+    func(code);
+  } catch(e) {
+    rv = e;
+  }
+  if (!rv) {
+    throw new Error('not throw');
+  }
 }
 
-var current = 2013;
-var MIN = 2006;
+describe('GB2260.get', function() {
+  var gb2260 = new gb.GB2260();
 
-while (current >= MIN) {
-  suite(current);
-  current = current - 1;
-}
+  it('is a province', function() {
+    var data = gb2260.get(110000);
+    assert(data.name, '北京市');
+    assert(data.toString(), '北京市');
+    assert(data.valueOf(), data.toString());
 
-describe('other', function() {
-  it('is not different between two years', function() {
-    var data = new gb.Division(220724);
-    assert(data.inspect(), '<GB/T 2260> 吉林省 松原市');
-    assert(data.valid(), false);
+    assert(data.inspect(), '<GB/T 2260-2014> 110000 北京市');
 
-    data = new gb.Division(220724, 2012);
-    assert(data.inspect(), '<GB/T 2260-2012> 吉林省 松原市 扶余县');
-    assert(data.valid(), true);
+    var rv = data.toJSON();
+    assert(rv.code, '110000');
+    assert(rv.name, '北京市');
   });
 
-  it('is not valid', function() {
-    var data = new gb.Division(1000000);
-    assert(data.valid(), false);
-    data = new gb.Division(1001000);
-    assert(data.valid(), false);
+  it('is a prefecture', function() {
+    var data = gb2260.get(110100);
+    assert(data.name, '市辖区');
+    assert(data.province.name, '北京市');
+    assert(data.toString(), '北京市 市辖区');
+    assert(data.valueOf(), data.toString());
   });
 
-  it('will throw', function() {
-    var rv;
-    try {
-      new gb.Division(220724, 2005);
-    } catch (e) {
-      rv = e;
-    }
-    if (!rv) {
-      throw new Error('not throw');
+  it('is a county', function() {
+    var data = gb2260.get(110101);
+    assert(data.name, '东城区');
+    assert(data.province.name, '北京市');
+    assert(data.prefecture.name, '市辖区');
+    assert(data.toString(), '北京市 市辖区 东城区');
+    assert(data.valueOf(), data.toString());
+  });
+
+  it('will throw invalid code length', function() {
+    assertError(gb2260.get.bind(gb2260), 2207248);
+    assertError(gb2260.get.bind(gb2260), 2);
+  });
+
+  it('will throw invalid province code', function() {
+    assertError(gb2260.get.bind(gb2260), 99);
+  });
+
+  it('will throw invalid prefecture code', function() {
+    assertError(gb2260.get.bind(gb2260), 111);
+    assertError(gb2260.get.bind(gb2260), 1109);
+  });
+
+  it('will throw invalid county code', function() {
+    assertError(gb2260.get.bind(gb2260), 11019);
+    assertError(gb2260.get.bind(gb2260), 110119);
+  });
+});
+
+describe('GB2260.provinces', function() {
+  var gb2260 = new gb.GB2260();
+
+  it('get provinces', function() {
+    var data = gb2260.provinces();
+    if (!data.length) {
+      throw new Error('no provinces');
     }
   });
 
-  it('has keys', function() {
-    var keys = Object.keys(gb.data);
-    if (keys.indexOf('2012') === -1) {
-      throw new Error('2012 not in keys');
+  it('get prefectures', function() {
+    var data = gb2260.prefectures(11);
+    if (!data.length) {
+      throw new Error('no prefectures');
     }
+  });
+
+  it('get counties', function() {
+    var data = gb2260.counties(1101);
+    if (!data.length) {
+      throw new Error('no counties');
+    }
+  });
+
+  it('can not get prefectures', function() {
+    assertError(gb2260.prefectures.bind(gb2260), 123);
+    assertError(gb2260.prefectures.bind(gb2260), 99);
+  });
+
+  it('can not get prefectures with invalid code', function() {
+    assertError(gb2260.prefectures.bind(gb2260), 9);
+  });
+
+  it('can not get counties', function() {
+    assertError(gb2260.counties.bind(gb2260), 1109);
+    assertError(gb2260.counties.bind(gb2260), 119);
+    assertError(gb2260.counties.bind(gb2260), 9909);
+  });
+
+  it('can not get counties with invalid code', function() {
+    assertError(gb2260.counties.bind(gb2260), 9);
   });
 });
