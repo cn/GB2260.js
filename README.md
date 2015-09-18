@@ -19,36 +19,29 @@ Install with npm:
 var gb2260 = require('gb2260');
 ```
 
-### .data
-
-Get data of all GB/T 2260 codes.
+## GB2260
 
 ```js
-console.log(gb2260.data)
+new gb2260.GB2260(year);
 ```
 
-### Division(code, year)
+Interface for GB2260. Currently support [GB2260 spec v0.1](https://github.com/cn/GB2260/blob/v0.1/spec.md).
 
-Parse a given code, and get information of that code.
+### .get(code)
 
-```js
-var data = new Division(420822)
-// => <GB/T 2260> 湖北省 荆门市 沙洋县
-```
+Get division for the given code.
 
-You can choose a certain year of the GB/T 2260 codes.
+### .provinces()
 
-```js
-var data = new Division(220724)
-// => <GB/T 2260> 吉林省 松原市
-data.valid()
-// => false
+Return a list of provinces in Division data structure.
 
-var data = new Division(220724, 2012)
-// => <GB/T 2260-2012> 吉林省 松原市 扶余县
-data.valid()
-// => true
-```
+### .prefectures(code)
+
+Return a list of prefecture level cities in Division data structure.
+
+### .counties(code)
+
+Return a list of counties in Division data structure.
 
 ## License
 
