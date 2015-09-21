@@ -4,7 +4,7 @@ node_js:
 
 before_script:
   - mkdir -p lib
-  - npm run data
+  - npm run prepublish
 
 script: npm run test-lcov
 
