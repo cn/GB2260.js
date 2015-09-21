@@ -5,7 +5,7 @@
 [![Coverage](https://img.shields.io/coveralls/cn/GB2260.js.svg?style=flat)](https://coveralls.io/r/cn/GB2260.js)
 [![Current Release](https://img.shields.io/npm/v/gb2260.svg?style=flat)](https://npmjs.org/package/gb2260)
 
-The latest GB/T 2260 codes. Updated at 2013, published at 2014.
+The latest GB/T 2260 codes. Spec v0.1 supported.
 
 ## Installation
 
