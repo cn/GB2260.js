@@ -52,6 +52,10 @@ describe('GB2260.get', function() {
     assert(data.valueOf(), data.toString());
   });
 
+  it('is null', function() {
+    assert(gb2260.get(999999), null);
+  });
+
   it('will throw invalid code length', function() {
     assertError(gb2260.get.bind(gb2260), 2207248);
     assertError(gb2260.get.bind(gb2260), 2);
@@ -59,20 +63,21 @@ describe('GB2260.get', function() {
 
   it('will throw invalid province code', function() {
     assertError(gb2260.get.bind(gb2260), 99);
+    assertError(gb2260.prefectures.bind(gb2260), 990000);
   });
 
   it('will throw invalid prefecture code', function() {
     assertError(gb2260.get.bind(gb2260), 111);
     assertError(gb2260.get.bind(gb2260), 1109);
+    assertError(gb2260.counties.bind(gb2260), 999900);
   });
 
   it('will throw invalid county code', function() {
     assertError(gb2260.get.bind(gb2260), 11019);
-    assertError(gb2260.get.bind(gb2260), 110119);
   });
 });
 
-describe('GB2260.provinces', function() {
+describe('GB2260 tree', function() {
   var gb2260 = new gb.GB2260();
 
   it('get provinces', function() {

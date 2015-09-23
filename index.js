@@ -2,7 +2,7 @@
  * GB2260 parser
  */
 
-LATEST_YEAR = 2014;
+var LATEST_YEAR = 2014;
 
 function GB2260(year, data) {
   year = year || LATEST_YEAR;
@@ -20,11 +20,11 @@ GB2260.prototype.get = function(code) {
   }
 
   var data = this._data[code];
-  data.code = code;
   if (!data) {
     return null;
   }
 
+  data.code = code;
   var year = this.year;
   var division = new Division(data, year);
 
