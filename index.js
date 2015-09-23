@@ -24,7 +24,7 @@ GB2260.prototype.get = function(code) {
     throw new Error('Invalid code');
   }
 
-  var province = new Division(data.code, data.name, year);
+  var province = new Division(data, year);
   if (code.length === 2) {
     return province;
   }
@@ -36,7 +36,7 @@ GB2260.prototype.get = function(code) {
     throw new Error('Invalid code');
   }
 
-  var prefecture = new Division(data.code, data.name, year);
+  var prefecture = new Division(data, year);
   if (code.length === 4) {
     prefecture.province = province;
     return prefecture;
@@ -50,7 +50,7 @@ GB2260.prototype.get = function(code) {
     throw new Error('Invalid code');
   }
 
-  var county = new Division(data.code, data.name, year);
+  var county = new Division(data, year);
   county.province = province;
   county.prefecture = prefecture;
   return county;
@@ -59,8 +59,7 @@ GB2260.prototype.get = function(code) {
 GB2260.prototype.provinces = function() {
   var me = this;
   return Object.keys(me._data).map(function(k) {
-    var rv = me._data[k];
-    return new Division(rv.code, rv.name, me.year);
+    return new Division(me._data[k], me.year);
   });
 };
 
@@ -74,11 +73,10 @@ GB2260.prototype.prefectures = function(code) {
     throw new Error('Invalid province code');
   }
   var me = this;
-  var province = new Division(data.code, data.name, me.year);
+  var province = new Division(data, me.year);
 
   return Object.keys(data.prefectures).map(function(k) {
-    var rv = data.prefectures[k];
-    var division = new Division(rv.code, rv.name, me.year);
+    var division = new Division(data.prefectures[k], me.year);
     division.province = province;
     return division;
   });
@@ -99,17 +97,16 @@ GB2260.prototype.counties = function(code) {
   }
 
   var year = this.year;
-  var province = new Division(data.code, data.name, year);
+  var province = new Division(data, year);
 
   data = data.prefectures[code];
   if (!data) {
     throw new Error('Invalid prefecture code');
   }
-  var prefecture = new Division(data.code, data.name, year);
+  var prefecture = new Division(data, year);
 
   return Object.keys(data.counties).map(function(k) {
-    var rv = data.counties[k];
-    var division = new Division(rv.code, rv.name, year);
+    var division = new Division(data.counties[k], year);
     division.province = province;
     division.prefecture = prefecture;
     return division;
@@ -117,9 +114,10 @@ GB2260.prototype.counties = function(code) {
 };
 
 
-function Division(code, name, year) {
-  this.code = code;
-  this.name = name;
+function Division(data, year) {
+  this.code = data.code;
+  this.name = data.name;
+  this.pinyin = data.pinyin;
   this.year = year;
 }
 

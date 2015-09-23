@@ -123,7 +123,7 @@ describe('for coverage', function() {
   });
 
   it('can has no year', function() {
-    var div = new gb.Division(12, 'GB');
+    var div = new gb.Division({code: 12, name: 'GB'});
     assert(div.inspect(), '<GB/T 2260> 12 GB');
   });
 });
