@@ -14,103 +14,119 @@ function GB2260(year, data) {
 }
 
 GB2260.prototype.get = function(code) {
-  code = code.toString().replace(/0+$/, '');
-  if (code.length < 2 || code.length > 6) {
+  code = code.toString();
+  if (code.length !== 6) {
     throw new Error('Invalid code');
   }
+
+  var data = this._data[code];
+  data.code = code;
+  if (!data) {
+    return null;
+  }
+
   var year = this.year;
-  var data = this._data[code.substr(0, 2)];
-  if (!data) {
-    throw new Error('Invalid code');
+  var division = new Division(data, year);
+
+  if (/0{4}$/.test(code)) {
+    return division;
   }
 
-  var province = new Division(data, year);
-  if (code.length === 2) {
-    return province;
-  }
-  if (code.length === 3) {
-    code += '0';
-  }
-  data = data.prefectures[code.substr(0, 4)];
-  if (!data) {
-    throw new Error('Invalid code');
+  var provinceCode = code.substr(0, 2) + '0000';
+  data = this._data[provinceCode];
+  data.code = provinceCode;
+  division.province = new Division(data, year);
+
+  if (/0{2}$/.test(code)) {
+    return division;
   }
 
-  var prefecture = new Division(data, year);
-  if (code.length === 4) {
-    prefecture.province = province;
-    return prefecture;
-  }
-
-  if (code.length === 5) {
-    code += '0';
-  }
-  data = data.counties[code];
-  if (!data) {
-    throw new Error('Invalid code');
-  }
-
-  var county = new Division(data, year);
-  county.province = province;
-  county.prefecture = prefecture;
-  return county;
+  var prefectureCode = code.substr(0, 4) + '00';
+  data = this._data[prefectureCode];
+  data.code = prefectureCode;
+  division.prefecture = new Division(data, year);
+  return division;
 };
 
 GB2260.prototype.provinces = function() {
   var me = this;
-  return Object.keys(me._data).map(function(k) {
-    return new Division(me._data[k], me.year);
+  var rv = [], data;
+  Object.keys(me._data).forEach(function(k) {
+    if (/0{4}$/.test(k)) {
+      data = me._data[k];
+      data.code = k;
+      rv.push(new Division(data, me.year));
+    }
   });
+  return rv;
 };
 
 GB2260.prototype.prefectures = function(code) {
-  code = code.toString().replace(/0+$/, '');
-  if (code.length > 2) {
+  code = code.toString();
+  if (!/0{4}$/.test(code)) {
     throw new Error('Invalid province code');
   }
+
   var data = this._data[code];
   if (!data) {
     throw new Error('Invalid province code');
   }
-  var me = this;
-  var province = new Division(data, me.year);
 
-  return Object.keys(data.prefectures).map(function(k) {
-    var division = new Division(data.prefectures[k], me.year);
-    division.province = province;
-    return division;
+  var me = this;
+  data.code = code;
+
+  var province = new Division(data, me.year);
+  var pattern = new RegExp('^' + code.substr(0, 2) + '\\d{2}00$');
+  var rv = [], division;
+
+  Object.keys(me._data).forEach(function(k) {
+    if (pattern.test(k) && k !== code) {
+      data = me._data[k];
+      data.code = k;
+      division = new Division(data, me.year);
+      division.province = province;
+      rv.push(division);
+    }
   });
+
+  return rv;
 };
 
 GB2260.prototype.counties = function(code) {
-  code = code.toString().replace(/0+$/, '');
-  if (code.length > 4 || code.length < 3) {
+  code = code.toString();
+  if (!/[1-9]0{2,3}$/.test(code)) {
     throw new Error('Invalid prefecture code');
   }
-  if (code.length === 3) {
-    code += '0';
-  }
 
-  var data = this._data[code.substr(0, 2)];
+  var data = this._data[code];
   if (!data) {
     throw new Error('Invalid prefecture code');
   }
+  var me = this;
 
-  var year = this.year;
-  var province = new Division(data, year);
+  data.code = code;
+  var prefecture = new Division(data, me.year);
 
-  data = data.prefectures[code];
-  if (!data) {
-    throw new Error('Invalid prefecture code');
-  }
-  var prefecture = new Division(data, year);
+  var provinceCode = code.substr(0, 2) + '0000';
+  data = me._data[provinceCode]
+  data.code = provinceCode;
+  var province = new Division(data, me.year);
 
-  return Object.keys(data.counties).map(function(k) {
-    var division = new Division(data.counties[k], year);
-    division.province = province;
-    division.prefecture = prefecture;
-    return division;
+  var pattern = new RegExp('^' + code.substr(0, 4));
+  var rv = [], division;
+
+  Object.keys(me._data).forEach(function(k) {
+    if (pattern.test(k) && k !== code) {
+      data = me._data[k];
+      data.code = k;
+      division = new Division(data, me.year);
+      division.province = province;
+      division.prefecture = prefecture;
+      rv.push(division);
+    }
   });
+
+  return rv;
 };
 
 

@@ -83,14 +83,14 @@ describe('GB2260.provinces', function() {
   });
 
   it('get prefectures', function() {
-    var data = gb2260.prefectures(11);
+    var data = gb2260.prefectures(110000);
     if (!data.length) {
       throw new Error('no prefectures');
     }
   });
 
   it('get counties', function() {
-    var data = gb2260.counties(1101);
+    var data = gb2260.counties(110100);
     if (!data.length) {
       throw new Error('no counties');
     }
