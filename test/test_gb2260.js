@@ -127,7 +127,7 @@ describe('for coverage', function() {
     new gb.GB2260(2014, data);
   });
 
-  it('can has no year', function() {
+  it('can has no revision', function() {
     var div = new gb.Division({code: 12, name: 'GB'});
     assert(div.inspect(), '<GB/T 2260> 12 GB');
   });

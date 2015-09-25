@@ -40,9 +40,9 @@ var names = fs.readdirSync('data');
 names.forEach(function(name) {
   var m = name.match(/^GB2260-(\d+).txt$/);
   if (!m) return;
-  var year = m[1];
+  var revision = m[1];
   var text = fs.readFileSync(__dirname + '/../data/' + name, 'utf8');
   var data = JSON.stringify(parse(text), null, 2);
-  console.log('write ' + year);
-  fs.writeFileSync(__dirname + '/../lib/' + year + '.json', data);
+  console.log('write ' + revision);
+  fs.writeFileSync(__dirname + '/../lib/' + revision + '.json', data);
 });
