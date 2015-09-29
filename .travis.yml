@@ -3,7 +3,6 @@ node_js:
   - "0.12"
 
 before_script:
-  - mkdir -p lib
   - npm run prepublish
 
 script: npm run test-lcov

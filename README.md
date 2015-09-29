@@ -5,7 +5,7 @@
 [![Coverage](https://img.shields.io/coveralls/cn/GB2260.js.svg?style=flat)](https://coveralls.io/r/cn/GB2260.js)
 [![Current Release](https://img.shields.io/npm/v/gb2260.svg?style=flat)](https://npmjs.org/package/gb2260)
 
-The latest GB/T 2260 codes. Spec v0.1 supported.
+The latest GB/T 2260 codes. Spec v0.2 supported.
 
 ## Installation
 
@@ -22,7 +22,7 @@ var gb2260 = require('gb2260');
 ## GB2260
 
 ```js
-new gb2260.GB2260(year);
+new gb2260.GB2260(revision);
 ```
 
 Interface for GB2260. Currently support [GB2260 spec v0.1](https://github.com/cn/GB2260/blob/v0.1/spec.md).
@@ -42,6 +42,10 @@ Return a list of prefecture level cities in Division data structure.
 ### .counties(code)
 
 Return a list of counties in Division data structure.
+
+## revisions()
+
+Return a list of available revisions.
 
 ## License
 
