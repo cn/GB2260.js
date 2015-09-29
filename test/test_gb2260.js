@@ -131,4 +131,8 @@ describe('for coverage', function() {
     var div = new gb.Division({code: 12, name: 'GB'});
     assert(div.inspect(), '<GB/T 2260> 12 GB');
   });
+
+  it('has revisions', function() {
+    gb.revisions();
+  });
 });
