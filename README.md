@@ -25,7 +25,7 @@ var gb2260 = require('gb2260');
 new gb2260.GB2260(revision);
 ```
 
-Interface for GB2260. Currently support [GB2260 spec v0.1](https://github.com/cn/GB2260/blob/v0.1/spec.md).
+Interface for GB2260. Currently support [GB2260 spec v0.2](https://github.com/cn/GB2260/blob/v0.2/spec.md).
 
 ### .get(code)
 
