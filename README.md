@@ -5,7 +5,7 @@
 [![Coverage](https://img.shields.io/coveralls/cn/GB2260.js.svg?style=flat)](https://coveralls.io/r/cn/GB2260.js)
 [![Current Release](https://img.shields.io/npm/v/gb2260.svg?style=flat)](https://npmjs.org/package/gb2260)
 
-The latest GB/T 2260 codes. Spec v0.2 supported.
+The latest GB/T 2260 codes. Read the [GB2260 Specification](data/spec.md).
 
 ## Installation
 
@@ -22,30 +22,73 @@ var gb2260 = require('gb2260');
 ## GB2260
 
 ```js
-new gb2260.GB2260(revision);
+var gb = new gb2260.GB2260(revision);
 ```
 
-Interface for GB2260. Currently support [GB2260 spec v0.2](https://github.com/cn/GB2260/blob/v0.2/spec.md).
+Interface for GB2260.
 
 ### .get(code)
 
 Get division for the given code.
 
+```js
+var division = gb.get("110105")
+// <GB/T 2260-2014> 110105 北京市 市辖区 朝阳区
+
+division.name
+// 朝阳区
+division.code
+// 110105
+division.revision
+// 2014
+division.pinyin
+// zhāo yáng qū
+
+division.province
+// <GB/T 2260-2014> 110000 北京市
+division.prefecture
+// <GB/T 2260-2014> 110100 市辖区
+
+division.toJSON()
+// { name: '朝阳区', code: '110105', revision: 2014 }
+division.toString()
+// 北京市 市辖区 朝阳区
+division.valueOf()
+// 北京市 市辖区 朝阳区
+```
+
 ### .provinces()
 
 Return a list of provinces in Division data structure.
+
+```js
+gb.provinces()
+```
 
 ### .prefectures(code)
 
 Return a list of prefecture level cities in Division data structure.
 
+```js
+gb.prefectures(110000)
+```
+
 ### .counties(code)
 
 Return a list of counties in Division data structure.
 
+```js
+gb.counties(110100)
+```
+
 ## revisions()
 
 Return a list of available revisions.
+
+```js
+gb2260.revisions()
+// [ '2014', '2013', ..., '2002']
+```
 
 ## License
 
