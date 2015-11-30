@@ -90,6 +90,15 @@ gb2260.revisions()
 // [ '2014', '2013', ..., '2002']
 ```
 
+## Additional Notes
+
+Build with webpack with ContextReplacementPlugin:
+
+```js
+new webpack.ContextReplacementPlugin(/gb2260.*$/, '', false, /2014/),
+```
+
+
 ## License
 
 MIT.
