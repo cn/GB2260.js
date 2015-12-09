@@ -8,7 +8,7 @@ var header = [
   "}(this, function () {\n",
 ].join('\n')
 
-var footer = '\n}));'
+var footer = '\n}));\n'
 
 
 var code = fs.readFileSync('lib/index.js', 'utf8')
