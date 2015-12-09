@@ -24,7 +24,8 @@
   },
   "scripts": {
     "test": "node_modules/.bin/mocha",
-    "prepublish": "node scripts/generate.js",
+    "generate": "node scripts/generate.js",
+    "build": "node scripts/build.js",
     "test-cov": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha --bail",
     "test-lcov": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha --report lcovonly --bail"
   }
