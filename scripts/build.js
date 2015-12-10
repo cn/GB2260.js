@@ -1,14 +1,11 @@
 var fs = require('fs')
 
 var header = [
-  "(function (global, factory) {",
-  "  typeof exports === 'object' && typeof module !== 'undefined' ? factory() :",
-  "  typeof define === 'function' && define.amd ? define(factory) :",
-  "  factory();",
-  "}(this, function () {\n",
+  "var gb2260 = {};",
+  "(function(exports) {\n",
 ].join('\n')
 
-var footer = '\n}));\n'
+var footer = '\n})(gb2260);\n'
 
 
 var code = fs.readFileSync('lib/index.js', 'utf8')

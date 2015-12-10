@@ -1,8 +1,5 @@
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  factory();
-}(this, function () {
+var gb2260 = {};
+(function(exports) {
 /**
  * GB2260 parser
  */
@@ -187,4 +184,4 @@ exports.register = function(revision, data) {
   DATABASE[revision] = data;
 }
 
-}));
+})(gb2260);
