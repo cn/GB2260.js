@@ -2,6 +2,19 @@
 
 Here is the changelogs of GB2260.js.
 
+## Version 0.5.0
+
+Release at Dec 11, 2015
+
+Update data, remove pinyin.
+
+
+## Version 0.4.1
+
+Released at Dec 09, 2015
+
+Build dist.
+
 ## Version 0.4.0
 
 Released at Sep 29, 2015

@@ -1,6 +1,6 @@
 {
   "name": "gb2260",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "中华人民共和国国家标准 GB/T 2260 行政区划代码",
   "main": "index.js",
   "repository": {
@@ -19,8 +19,7 @@
   "homepage": "https://github.com/cn/GB2260.js",
   "devDependencies": {
     "istanbul": "^0.3.20",
-    "mocha": "^2.3.2",
-    "pinyin": "^2.6.2"
+    "mocha": "^2.3.2"
   },
   "scripts": {
     "test": "node_modules/.bin/mocha",
