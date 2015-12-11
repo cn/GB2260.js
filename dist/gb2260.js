@@ -23,43 +23,39 @@ GB2260.prototype.get = function(code) {
     throw new Error('Invalid code');
   }
 
-  var data = this._data[code];
-  if (!data) {
+  var name = this._data[code];
+  if (!name) {
     return null;
   }
 
-  data.code = code;
   var revision = this.revision;
-  var division = new Division(data, revision);
+  var division = new Division(code, name, revision);
 
   if (/0{4}$/.test(code)) {
     return division;
   }
 
   var provinceCode = code.substr(0, 2) + '0000';
-  data = this._data[provinceCode];
-  data.code = provinceCode;
-  division.province = new Division(data, revision);
+  name = this._data[provinceCode];
+  division.province = new Division(provinceCode, name, revision);
 
   if (/0{2}$/.test(code)) {
     return division;
   }
 
   var prefectureCode = code.substr(0, 4) + '00';
-  data = this._data[prefectureCode];
-  data.code = prefectureCode;
-  division.prefecture = new Division(data, revision);
+  name = this._data[prefectureCode];
+  division.prefecture = new Division(prefectureCode, name, revision);
   return division;
 };
 
 GB2260.prototype.provinces = function() {
   var me = this;
-  var rv = [], data;
+  var rv = [], name;
   Object.keys(me._data).forEach(function(k) {
     if (/0{4}$/.test(k)) {
-      data = me._data[k];
-      data.code = k;
-      rv.push(new Division(data, me.revision));
+      name = me._data[k];
+      rv.push(new Division(k, name, me.revision));
     }
   });
   return rv;
@@ -71,23 +67,20 @@ GB2260.prototype.prefectures = function(code) {
     throw new Error('Invalid province code');
   }
 
-  var data = this._data[code];
-  if (!data) {
+  var name = this._data[code];
+  if (!name) {
     throw new Error('Invalid province code');
   }
 
   var me = this;
-  data.code = code;
-
-  var province = new Division(data, me.revision);
+  var province = new Division(code, name, me.revision);
   var pattern = new RegExp('^' + code.substr(0, 2) + '\\d{2}00$');
   var rv = [], division;
 
   Object.keys(me._data).forEach(function(k) {
     if (pattern.test(k) && k !== code) {
-      data = me._data[k];
-      data.code = k;
-      division = new Division(data, me.revision);
+      name = me._data[k];
+      division = new Division(k, name, me.revision);
       division.province = province;
       rv.push(division);
     }
@@ -102,28 +95,24 @@ GB2260.prototype.counties = function(code) {
     throw new Error('Invalid prefecture code');
   }
 
-  var data = this._data[code];
-  if (!data) {
+  var name = this._data[code];
+  if (!name) {
     throw new Error('Invalid prefecture code');
   }
   var me = this;
-
-  data.code = code;
-  var prefecture = new Division(data, me.revision);
+  var prefecture = new Division(code, name, me.revision);
 
   var provinceCode = code.substr(0, 2) + '0000';
-  data = me._data[provinceCode]
-  data.code = provinceCode;
-  var province = new Division(data, me.revision);
+  name = me._data[provinceCode]
+  var province = new Division(provinceCode, name, me.revision);
 
   var pattern = new RegExp('^' + code.substr(0, 4));
   var rv = [], division;
 
   Object.keys(me._data).forEach(function(k) {
     if (pattern.test(k) && k !== code) {
-      data = me._data[k];
-      data.code = k;
-      division = new Division(data, me.revision);
+      name = me._data[k];
+      division = new Division(k, name, me.revision);
       division.province = province;
       division.prefecture = prefecture;
       rv.push(division);
@@ -134,10 +123,9 @@ GB2260.prototype.counties = function(code) {
 };
 
 
-function Division(data, revision) {
-  this.code = data.code;
-  this.name = data.name;
-  this.pinyin = data.pinyin;
+function Division(code, name, revision) {
+  this.code = code;
+  this.name = name;
   this.revision = revision;
 }
 

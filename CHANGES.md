@@ -2,6 +2,13 @@
 
 Here is the changelogs of GB2260.js.
 
+## Version 0.5.1
+
+Release at Dec 11, 2015
+
+Build dist.
+
+
 ## Version 0.5.0
 
 Release at Dec 11, 2015
