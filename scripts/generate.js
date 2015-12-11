@@ -3,9 +3,6 @@
  */
 
 var fs = require('fs');
-var pinyin = require('pinyin');
-
-var _cache = {};
 
 
 function parse(text) {
@@ -15,22 +12,7 @@ function parse(text) {
   lines.forEach(function(line) {
     var bits = line.split('\t');
     var code = bits[0], name = bits[1];
-    var pronoun = _cache[name];
-
-    if (!pronoun) {
-      pronoun = pinyin(name).map(function(ns) {
-        if (ns.length > 1) {
-          console.warn(name, ns);
-        }
-        return ns[0];
-      }).join(' ');
-      _cache[name] = pronoun;
-    }
-
-    rv[code] = {
-        name: name,
-        pinyin: pronoun,
-    }
+    rv[code] = name
   });
 
   return rv;
@@ -39,7 +21,7 @@ function parse(text) {
 var revisions = [];
 
 fs.readdirSync('data').forEach(function(name) {
-  var m = name.match(/^GB2260-(\d+).txt$/);
+  var m = name.match(/^(\d+).txt$/);
   if (!m) return;
   var revision = m[1];
   revisions.push(revision);
