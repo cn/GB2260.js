@@ -2,7 +2,7 @@
   "name": "gb2260",
   "version": "0.5.1",
   "description": "中华人民共和国国家标准 GB/T 2260 行政区划代码",
-  "main": "index.js",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/cn/GB2260.js.git"
