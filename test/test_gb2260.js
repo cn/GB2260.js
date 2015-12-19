@@ -1,5 +1,6 @@
 
 var gb = require('../');
+gb.register('2014', require('../lib/2014'));
 
 function assert(a, b) {
   if (a !== b) {

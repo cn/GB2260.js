@@ -4,9 +4,8 @@ var gb2260 = {};
  * GB2260 parser
  */
 
-var DATABASE = {};
-
 var REVISIONS = ["2014","2013","2012","2011","2010","2009","2008","2007","2006","2005","200506","2004","200409","200403","2003","200306","2002"];
+var DATABASE = {};
 
 function GB2260(revision, data) {
   revision = revision || REVISIONS[0];
@@ -165,11 +164,11 @@ exports.revisions = function() {
   return REVISIONS;
 };
 
-exports.Division = Division;
-exports.GB2260 = GB2260;
-
 exports.register = function(revision, data) {
   DATABASE[revision] = data;
-}
+};
+
+exports.Division = Division;
+exports.GB2260 = GB2260;
 
 })(gb2260);
