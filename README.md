@@ -17,6 +17,8 @@ Install with npm:
 
 ```js
 var gb2260 = require('gb2260');
+// register revision data
+gb2260.register('201410', require('gb2260/lib/201410'))
 ```
 
 ## GB2260
@@ -33,24 +35,24 @@ Get division for the given code.
 
 ```js
 var division = gb.get("110105")
-// <GB/T 2260-2014> 110105 北京市 市辖区 朝阳区
+// <GB/T 2260-201410> 110105 北京市 市辖区 朝阳区
 
 division.name
 // 朝阳区
 division.code
 // 110105
 division.revision
-// 2014
+// 201410
 division.pinyin
 // zhāo yáng qū
 
 division.province
-// <GB/T 2260-2014> 110000 北京市
+// <GB/T 2260-201410> 110000 北京市
 division.prefecture
-// <GB/T 2260-2014> 110100 市辖区
+// <GB/T 2260-201410> 110100 市辖区
 
 division.toJSON()
-// { name: '朝阳区', code: '110105', revision: 2014 }
+// { name: '朝阳区', code: '110105', revision: 201410 }
 division.toString()
 // 北京市 市辖区 朝阳区
 division.valueOf()
@@ -87,17 +89,8 @@ Return a list of available revisions.
 
 ```js
 gb2260.revisions()
-// [ '2014', '2013', ..., '2002']
+// [ '201410', '201308', ..., '200212']
 ```
-
-## Additional Notes
-
-Build with webpack with ContextReplacementPlugin:
-
-```js
-new webpack.ContextReplacementPlugin(/gb2260.*$/, '', false, /2014/),
-```
-
 
 ## License
 
