@@ -9,9 +9,9 @@ function parse(text) {
   var lines = text.trim().split('\n');
   var rv = {};
 
-  lines.forEach(function(line) {
+  lines.slice(1).forEach(function(line) {
     var bits = line.split('\t');
-    var code = bits[0], name = bits[1];
+    var code = bits[2], name = bits[3];
     rv[code] = name
   });
 
@@ -21,7 +21,7 @@ function parse(text) {
 var revisions = [];
 
 fs.readdirSync('data').forEach(function(name) {
-  var m = name.match(/^(\d+).txt$/);
+  var m = name.match(/^(\d+).tsv/);
   if (!m) return;
   var revision = m[1];
   revisions.push(revision);
