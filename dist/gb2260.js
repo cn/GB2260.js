@@ -4,14 +4,14 @@ var gb2260 = {};
  * GB2260 parser
  */
 
-var REVISIONS = ["2014","2013","2012","2011","2010","2009","2008","2007","2006","2005","200506","2004","200409","200403","2003","200306","2002"];
+var REVISIONS = ["201410","201308","201210","201110","201010","200912","200812","200712","200612","200512","200506","200412","200409","200403","200312","200306","200212"];
 var DATABASE = {};
 
 function GB2260(revision, data) {
   revision = revision || REVISIONS[0];
   this.revision = revision;
   if (!data) {
-    data = DATABASE[revision];
+    data = DATABASE[revision.toString()];
   }
   this._data = data;
 }
@@ -48,10 +48,17 @@ GB2260.prototype.get = function(code) {
   return division;
 };
 
+GB2260.prototype.codes = function() {
+  if (!this._codes) {
+    this._codes = Object.keys(this._data).sort();
+  }
+  return this._codes;
+};
+
 GB2260.prototype.provinces = function() {
   var me = this;
   var rv = [], name;
-  Object.keys(me._data).forEach(function(k) {
+  this.codes().forEach(function(k) {
     if (/0{4}$/.test(k)) {
       name = me._data[k];
       rv.push(new Division(k, name, me.revision));
@@ -76,7 +83,7 @@ GB2260.prototype.prefectures = function(code) {
   var pattern = new RegExp('^' + code.substr(0, 2) + '\\d{2}00$');
   var rv = [], division;
 
-  Object.keys(me._data).forEach(function(k) {
+  this.codes().forEach(function(k) {
     if (pattern.test(k) && k !== code) {
       name = me._data[k];
       division = new Division(k, name, me.revision);
@@ -108,7 +115,7 @@ GB2260.prototype.counties = function(code) {
   var pattern = new RegExp('^' + code.substr(0, 4));
   var rv = [], division;
 
-  Object.keys(me._data).forEach(function(k) {
+  this.codes().forEach(function(k) {
     if (pattern.test(k) && k !== code) {
       name = me._data[k];
       division = new Division(k, name, me.revision);
