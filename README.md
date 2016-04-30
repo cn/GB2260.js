@@ -43,8 +43,6 @@ division.code
 // 110105
 division.revision
 // 201410
-division.pinyin
-// zhāo yáng qū
 
 division.province
 // <GB/T 2260-201410> 110000 北京市
