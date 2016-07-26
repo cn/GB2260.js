@@ -41,6 +41,7 @@ describe('GB2260.get', function() {
     assert(data.name, '市辖区');
     assert(data.province.name, '北京市');
     assert(data.toString(), '北京市 市辖区');
+    assert(data.toString('/'), '北京市/市辖区');
     assert(data.valueOf(), data.toString());
   });
 
@@ -50,6 +51,7 @@ describe('GB2260.get', function() {
     assert(data.province.name, '北京市');
     assert(data.prefecture.name, '市辖区');
     assert(data.toString(), '北京市 市辖区 东城区');
+    assert(data.toString('-'), '北京市-市辖区-东城区');
     assert(data.valueOf(), data.toString());
   });
 

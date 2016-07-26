@@ -135,7 +135,7 @@ function Division(code, name, revision) {
   this.revision = revision;
 }
 
-Division.prototype.toString = function() {
+Division.prototype.toString = function(joiner) {
   var rv = [];
   if (this.province) {
     rv.push(this.province.name);
@@ -144,7 +144,7 @@ Division.prototype.toString = function() {
     rv.push(this.prefecture.name);
   }
   rv.push(this.name);
-  return rv.join(' ');
+  return rv.join(joiner || ' ');
 };
 
 Division.prototype.valueOf = function() {
@@ -163,7 +163,7 @@ Division.prototype.toJSON = function() {
   return {
     name: this.name,
     code: this.code,
-    revision: this.revision,
+    revision: this.revision
   };
 };
 
