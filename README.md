@@ -1,6 +1,6 @@
 # GB/T 2260 
 
-> Fork from [cn/GB2260.js](https://github.com/kagawagao/GB2260.js)
+> Fork from [cn/GB2260.js](https://github.com/cn/GB2260.js)
 
 [![GB/T 2260](https://img.shields.io/badge/GB%2FT%202260-v0.3pre-blue.svg)](https://github.com/cn/GB2260)
 [![Build Status](https://img.shields.io/travis/cn/GB2260.js.svg?style=flat)](https://travis-ci.org/cn/GB2260.js)
