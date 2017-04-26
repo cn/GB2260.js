@@ -1,6 +1,6 @@
 
 var gb = require('../');
-gb.register('201410', require('../lib/201410'));
+gb.register('201607', require('../lib/201607'));
 
 function assert(a, b) {
   if (a !== b) {
@@ -29,7 +29,7 @@ describe('GB2260.get', function() {
     assert(data.toString(), '北京市');
     assert(data.valueOf(), data.toString());
 
-    assert(data.inspect(), '<GB/T 2260-201410> 110000 北京市');
+    assert(data.inspect(), '<GB/T 2260-201607> 110000 北京市');
 
     var rv = data.toJSON();
     assert(rv.code, '110000');
@@ -124,8 +124,8 @@ describe('GB2260 tree', function() {
 
 describe('for coverage', function() {
   it('can accept data', function() {
-    var data = require('../lib/201410');
-    new gb.GB2260(201410, data);
+    var data = require('../lib/201607');
+    new gb.GB2260(201607, data);
   });
 
   it('can has no revision', function() {

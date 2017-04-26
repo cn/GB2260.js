@@ -22,12 +22,12 @@ function parse(text) {
 function createJSON() {
   var revisions = [];
 
-  fs.readdirSync('data').forEach(function(name) {
+  fs.readdirSync('data/stats').forEach(function(name) {
     var m = name.match(/^(\d+).tsv/);
     if (!m) return;
     var revision = m[1];
     revisions.push(revision);
-    var text = fs.readFileSync(__dirname + '/../data/' + name, 'utf8');
+    var text = fs.readFileSync(__dirname + '/../data/stats/' + name, 'utf8');
     var data = JSON.stringify(parse(text), null, 2);
     console.log('write ' + revision);
     fs.writeFileSync(__dirname + '/../lib/' + revision + '.json', data);
