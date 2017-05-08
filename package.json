@@ -1,11 +1,11 @@
 {
-  "name": "gb2260",
-  "version": "0.6.0-beta",
+  "name": "nd-gb2260",
+  "version": "0.1.0-beta",
   "description": "中华人民共和国国家标准 GB/T 2260 行政区划代码",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cn/GB2260.js.git"
+    "url": "https://github.com/kagawagao/GB2260.js.git"
   },
   "keywords": [
     "China",
@@ -14,9 +14,9 @@
   "author": "Hsiaoming Yang <me@lepture.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cn/GB2260/issues"
+    "url": "https://github.com/kagawagao/GB2260/issues"
   },
-  "homepage": "https://github.com/cn/GB2260.js",
+  "homepage": "https://github.com/kagawagao/GB2260.js",
   "devDependencies": {
     "istanbul": "^0.3.20",
     "mocha": "^2.3.2"
